@@ -3,9 +3,7 @@ package config
 import (
 	"fmt"
 	"github.com/knadh/koanf"
-	"github.com/knadh/koanf/parsers/dotenv"
 	"github.com/knadh/koanf/parsers/json"
-	"github.com/knadh/koanf/parsers/toml"
 	"github.com/knadh/koanf/parsers/yaml"
 	"github.com/knadh/koanf/providers/env"
 	"github.com/knadh/koanf/providers/file"
@@ -27,10 +25,6 @@ func LoadConfig(configObject interface{}, envPrefix string, configFiles ...strin
 			parser = yaml.Parser()
 		case ".json":
 			parser = json.Parser()
-		case ".toml":
-			parser = toml.Parser()
-		case ".env":
-			parser = dotenv.Parser()
 		default:
 			return fmt.Errorf("invalid config file: %s", filename)
 		}
