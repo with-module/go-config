@@ -39,7 +39,7 @@ func LoadConfig(configObject interface{}, envPrefix string, configFiles ...strin
 	}), nil); err != nil {
 		return fmt.Errorf("failed to load config from environment: %v", err)
 	}
-	if err := loader.UnmarshalWithConf("", configObject, koanf.UnmarshalConf{Tag: "config"}); err != nil {
+	if err := loader.UnmarshalWithConf("", configObject, koanf.UnmarshalConf{Tag: "map"}); err != nil {
 		return fmt.Errorf("failed to unmarshal config into object: %v", err)
 	}
 	return nil
