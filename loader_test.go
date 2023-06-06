@@ -1,6 +1,7 @@
 package config
 
 import (
+	"log"
 	"os"
 	"path"
 	"testing"
@@ -47,4 +48,44 @@ func TestLoadConfigSuccessfully(t *testing.T) {
 	if config.App.Timeout != expectedTimeout {
 		t.Errorf("expect timeout value to be %s, got %s, env %s", expectedTimeout, config.App.Timeout, os.Getenv(envToOverride))
 	}
+}
+
+func TestLoadInvalidInputObject(t *testing.T) {
+	err := Load(SampleConfig{}, "CFG_")
+	if err == nil {
+		t.Error("there must be error because input object is not a pointer")
+	}
+	log.Printf("error: %v", err)
+}
+
+func TestLoadErrorDueToUnsupportedFile(t *testing.T) {
+	var config = new(SampleConfig)
+	var configPath = path.Join("samples", "config.invalidExt")
+	err := Load(config, "CFG_", configPath)
+	if err == nil {
+		t.Error("there must be error because only YAML file is supported")
+	}
+	log.Printf("error: %v", err)
+}
+
+func TestLoadErrorDueToInvalidFilePath(t *testing.T) {
+	var config = new(SampleConfig)
+	var configPath = path.Join("samples", "not-exist", "config.yaml")
+	err := Load(config, "CFG_", configPath)
+	if err == nil {
+		t.Error("there must be error because config file not found")
+	}
+	log.Printf("error: %v", err)
+}
+
+func TestLoadErrorDueToInvalidStruct(t *testing.T) {
+	var config = new(struct {
+		App int `config:"App"`
+	})
+	var configPath = path.Join("samples", "config.yaml")
+	err := Load(config, "CFG_", configPath)
+	if err == nil {
+		t.Error("there must be error due to unmarshal error")
+	}
+	log.Printf("error: %v", err)
 }
