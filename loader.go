@@ -6,7 +6,6 @@ import (
 	"github.com/knadh/koanf/providers/env"
 	"github.com/knadh/koanf/providers/file"
 	"github.com/knadh/koanf/v2"
-
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -30,7 +29,7 @@ func Load(configObject any, envPrefix string, configFiles ...string) error {
 	}
 
 	if err := inst.Load(env.Provider(envPrefix, ".", func(s string) string {
-		return strings.Replace(strings.ToLower(strings.TrimPrefix(s, envPrefix)), "_", ".", -1)
+		return strings.Replace(strings.TrimPrefix(s, envPrefix), "_", ".", -1)
 	}), nil); err != nil {
 		return fmt.Errorf("failed to load config from environment: %v", err)
 	}
