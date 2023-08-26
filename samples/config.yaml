@@ -1,10 +1,10 @@
-App:
-  Server: "localhost:8000"
-  Timeout: 60s
-  BaseUrl: "/api/v1"
-  LogEnabled: true
+app:
+  server: "localhost:8000"
+  timeout: 60s
+  url: "/api/v1"
+  log: true
 
-Database:
-  Host: "mongodb"
-  Port: 27017
+database:
+  host: "mongodb.net"
+  port: 27017
 
