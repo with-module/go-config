@@ -1,4 +1,4 @@
-module gitlab.com/with-junbach/go-modules/config
+module github.com/with-module/go-config
 
 go 1.21
 
